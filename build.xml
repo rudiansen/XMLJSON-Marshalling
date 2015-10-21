@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<project name="myFirstIntroSDEAssignment" default="compile" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+	
+	<property name="build.dir" value="build" />
+	<property name="src.dir" value="src" />
+	<property name="xjc.package" value="people.generated" />
+	<property name="lib.dir" value="lib" />
+	
+	<path id="lib.path.id">
+		<fileset dir="${lib.dir}" />
+	</path>
+	
+	<target name="resolve" description="--> retrieve dependencies with ivy">
+		<ivy:retrieve pattern="${lib.dir}/[artifact]-[type]-[revision].[ext]"/>
+	</target>
+	
+	<target name="init">
+        <echo message="Init has been called"/>
+        <mkdir dir="${build.dir}" />
+        <echo message="${build.dir} has been created"/>
+    </target>
+	
+	<target name="generate" depends="init">
+		<taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask" classpathref="lib.path.id">
+		</taskdef>
+		<xjc schema="people.xsd" destdir="${src.dir}" package="${xjc.package}" />
+	</target>
+	
+	<target name="compile" depends="resolve, init, generate">
+        <echo message="Compile target has been called"/>
+        <javac srcdir="src" destdir="${build.dir}" classpathref="lib.path.id" includeAntRuntime="false"/>   
+		<copy todir="${build.dir}" overwrite="true">
+			<fileset dir="${src.dir}">
+				<include name="*.xml" />
+			</fileset>
+		</copy>
+    </target>
+	
+	<target name="execute.evaluation" depends="compile, execute.PrintAllPeople, 
+		execute.GetPeopleByID, execute.GetPeopleByWeight, execute.HPReader, execute.HPWriter, execute.HPJson">
+		<echo message="Calling execute.evaluation target"/>		
+	</target>
+	
+	<target name="execute.DisplayHealthProfile">
+		<echo message="=> Executing displayHealthProfile with ID=10" />
+		<java classname="HealthProfileXMLReader" classpath="${build.dir}">
+			<classpath>
+				<fileset dir="${lib.dir}">
+					<include name="**/*.jar" />
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+			<arg value="displayHealthProfile"/>		
+		    <arg value="10"/>			
+		</java>
+	</target>
+	
+	<target name="execute.PrintAllPeople">
+		<echo message="=> Executing printAllPeople" />
+		<java classname="HealthProfileXMLReader" classpath="${build.dir}">
+			<classpath>
+				<fileset dir="${lib.dir}">
+					<include name="**/*.jar" />
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+			<arg value="printAllPeople"/>
+		</java>
+	</target>
+	
+	<target name="execute.GetPeopleByID">
+		<echo message="=> Executing getPeopleByID: with ID=5" />
+		<java classname="HealthProfileXMLReader" classpath="${build.dir}">
+			<classpath>
+				<fileset dir="${lib.dir}">
+					<include name="**/*.jar" />
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+			<arg value="getPeopleByID"/>		
+		    <arg value="5"/>			
+		</java>
+	</target>
+	
+	<target name="execute.GetPeopleByWeight">
+		<echo message="=> Executing getPeopleByWeight: with weight > 90"/>
+		<java classname="HealthProfileXMLReader" classpath="${build.dir}">
+			<classpath>
+				<fileset dir="${lib.dir}">
+					<include name="**/*.jar" />
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+			<arg value="getPeopleByWeight"/>		
+		    <arg value=">90"/>
+		</java>
+	</target>
+	
+	<target name="execute.HPReader">
+		<echo message="=> Marshalling to XML: will produce a people_new.xml in home folder" />
+		<java classname="HealthProfileReader" classpath="${build.dir}">
+			<classpath>
+				<fileset dir="${lib.dir}">
+					<include name="**/*.jar" />
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+	
+	<target name="execute.HPWriter">
+		<echo message="=> Unmarshalling from XML: will read the people.xml in home folder and print one at a time" />
+		<java classname="HealthProfileWriter" classpath="${build.dir}">
+			<classpath>
+				<fileset dir="${lib.dir}">
+					<include name="**/*.jar" />
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+	
+	<target name="execute.HPJson">
+		<echo message="=> Executing Health Profile Writer for Json" />
+		<java classname="HealthProfileJSON" classpath="${build.dir}">
+			<classpath>
+				<fileset dir="${lib.dir}">
+					<include name="**/*.jar" />
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</java>
+	</target>	
+	
+	<target name="command">
+		<echo message=""/>
+	</target>
+</project>
