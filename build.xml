@@ -131,8 +131,4 @@
 			</classpath>
 		</java>
 	</target>	
-	
-	<target name="command">
-		<echo message=""/>
-	</target>
 </project>

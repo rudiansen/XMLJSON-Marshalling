@@ -16,7 +16,6 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 public class HealthProfileXMLReader {
-
 	
 	Document doc;
     XPath xpath;
@@ -72,7 +71,6 @@ public class HealthProfileXMLReader {
     	XPathExpression expr = xpath.compile("//person[healthprofile/weight "+condition +" '"+weight+"']");
         NodeList personNode = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
         return personNode;
-
     }
     
     public void printPersonNode(Node personNode){

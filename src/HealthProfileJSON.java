@@ -42,7 +42,6 @@ public static PeopleStore people = new PeopleStore();
 			mapper.registerModule(module);
 			mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
 			mapper.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true);
-			mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 			
 			String result = mapper.writeValueAsString(people);
 			System.out.println(result);
