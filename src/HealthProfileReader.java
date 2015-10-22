@@ -12,6 +12,8 @@ public class HealthProfileReader {
 	public static PeopleStore people = new PeopleStore();
 	
 	public static void initializeDB() {
+		
+		//Creating 3 objects of Person
 		HealthProfile hpDaniel = new HealthProfile(58.0, 1.68);
 		Person daniel = new Person(new Long(1), "Daniel", "Bruzual", "1992-02-23", hpDaniel);
 		
@@ -35,8 +37,8 @@ public class HealthProfileReader {
     		Marshaller m = jc.createMarshaller();
     		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
     		
-    		m.marshal(people, new File("people_new.xml"));
-    		m.marshal(people, System.out);
+    		m.marshal(people, new File("people_new.xml")); //marshalling into XML file
+    		m.marshal(people, System.out); //marshalling into the System default output
 		}
 		catch(Exception e){
 			e.printStackTrace();

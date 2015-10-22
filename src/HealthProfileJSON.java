@@ -13,6 +13,8 @@ public class HealthProfileJSON {
 public static PeopleStore people = new PeopleStore();
 	
 	public static void initializeDB() {
+		
+		//Creating 3 objects of Person
 		HealthProfile hpDaniel = new HealthProfile(58.0, 1.68);
 		Person daniel = new Person(new Long(1), "Daniel", "Bruzual", "1992-02-23", hpDaniel);
 		
@@ -44,8 +46,8 @@ public static PeopleStore people = new PeopleStore();
 			mapper.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true);
 			
 			String result = mapper.writeValueAsString(people);
-			System.out.println(result);
-			mapper.writeValue(new File("people.json"), people);
+			System.out.println(result); 						//marshalling into the System default output
+			mapper.writeValue(new File("people.json"), people); //marshalling into Json file
 		}
 		catch(Exception e){
 			e.printStackTrace();
