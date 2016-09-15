@@ -10,9 +10,9 @@ Basically the program will load an XML file (i.e. person.xml) into memory using 
 
 To execute the program, you can clone this repository onto your local machine by following below steps:
 
-	1. Type on your terminal `git clone https://github.com/rudiansen/XMLJSON-Marshalling.git`
-	2. `cd XMLJSON-Marshalling`
-	3. `ant execute.evaluation`
+	1. Type on your terminal git clone https://github.com/rudiansen/XMLJSON-Marshalling.git
+	2. cd XMLJSON-Marshalling
+	3. ant execute.evaluation
 
 If you want to run a specific method, you can type `ant target name` contained in build.xml file. For example, to run `getPeopleByID(personID)` method, you can type the following command: 
 	`ant execute.getPeopleByID`
